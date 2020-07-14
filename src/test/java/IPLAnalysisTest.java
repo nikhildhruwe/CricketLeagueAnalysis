@@ -22,6 +22,7 @@ public class IPLAnalysisTest {
         }
     }
 
+    //UC1
     @Test
     public void givenIPLMostRunsCSVData_WhenSortedWithBattingAverages_ShouldReturnInDecreasingOrder() {
         try {
@@ -30,6 +31,21 @@ public class IPLAnalysisTest {
             String mostBattingAverages = iplAnalyser.getMostBattingAverages();
              IPLMostRunsData[] iplMostRunsData= new Gson().fromJson(mostBattingAverages, IPLMostRunsData[].class);
             Assert.assertEquals("MS Dhoni", iplMostRunsData[0].player);
+        } catch (IPLAnalyserException e) {
+            Assert.assertEquals(IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM, e.type);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //UC2
+    @Test
+    public void givenIPLMostRunsCSVData_WhenSortedWithStrikingRAte_ShouldReturnInDecreasingOrder() {
+        try {
+            IPLAnalyser iplAnalyser = new IPLAnalyser(IPLAnalyser.Player.BATSMAN);
+            iplAnalyser.loadIPLData(IPLAnalyser.Player.BATSMAN, IPL_MOST_RUNS_CSV_FILE_PATH);
+            String mostStrikingRates = iplAnalyser.getSortedOrderByStrikingRates();
+            IPLMostRunsData[] iplMostRunsData= new Gson().fromJson(mostStrikingRates, IPLMostRunsData[].class);
+            Assert.assertEquals("Ishant Sharma", iplMostRunsData[0].player);
         } catch (IPLAnalyserException e) {
             Assert.assertEquals(IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM, e.type);
             System.out.println(e.getMessage());

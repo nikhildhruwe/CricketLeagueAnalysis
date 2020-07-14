@@ -20,20 +20,19 @@ import java.util.stream.StreamSupport;
 public abstract class IPLAdapter {
     public <E> Map<String, IPLAnalyserDAO> loadIPLData(Class<E> csvClass, String iplFilePath) throws IPLAnalyserException {
         Map<String, IPLAnalyserDAO> iplMap = new HashMap<>();
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get(iplFilePath));
+        try (Reader reader = Files.newBufferedReader(Paths.get(iplFilePath));){
             ICSVBuilder csvBuilder = CSVBuilderFactory.craeteCSVBuilder();
             Iterator<E> iplIterator = csvBuilder.getCSVFileIterator(reader, csvClass);
             Iterable<E> iplIterable = () -> iplIterator;
             if (csvClass.getSimpleName().equals("IPLMostRunsData")) {
                 StreamSupport.stream(iplIterable.spliterator(), false)
                         .map(IPLMostRunsData.class::cast)
-                        .forEach(iplData -> iplMap.put(iplData.playerName, new IPLAnalyserDAO(iplData)));
+                        .forEach(iplData -> iplMap.put(iplData.player, new IPLAnalyserDAO(iplData)));
             }
             if (csvClass.getSimpleName().equals("IPLMostWicketsData")) {
                 StreamSupport.stream(iplIterable.spliterator(), false)
                         .map(IPLMostWicketsData.class::cast)
-                        .forEach(iplData -> iplMap.put(iplData.playerName, new IPLAnalyserDAO(iplData)));
+                        .forEach(iplData -> iplMap.put(iplData.player, new IPLAnalyserDAO(iplData)));
             }
             return iplMap;
         } catch (IOException e) {

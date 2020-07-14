@@ -3,42 +3,40 @@ package com.bridgelabz.cricketleagueanalysis.model;
 import com.opencsv.bean.CsvBindByName;
 
 public class IPLMostWicketsData {
-    @CsvBindByName(column = "POS", required = true)
-    public int position;
-
     @CsvBindByName(column = "PLAYER", required = true)
-    public String playerName;
-
-    @CsvBindByName(column = "Mat", required = true)
-    public int matches;
-
-    @CsvBindByName(column = "Inns", required = true)
-    public int innings;
-
-    @CsvBindByName(column = "Or", required = true)
-    public int over;
-
-    @CsvBindByName(column = "Runs", required = true)
-    public int runs;
-
-    @CsvBindByName(column = "Wkt", required = true)
-    public int wickets;
-
-    @CsvBindByName(column = "BBI", required = true)
-    public int bestBowlingInMatch;
+    public String player;
 
     @CsvBindByName(column = "Avg", required = true)
-    public Double average;
-
-    @CsvBindByName(column = "Econ", required = true)
-    public Double economy;
+    public double averages;
 
     @CsvBindByName(column = "SR", required = true)
-    public Double strikeRate;
+    public double strikeRates;
 
     @CsvBindByName(column = "4w", required = true)
-    public int numberOfFoursWickets;
+    public int fourWickets;
 
     @CsvBindByName(column = "5w", required = true)
-    public int numberOfFifthWickets;
+    public int fiveWickets;
+
+    @CsvBindByName(column = "Econ", required = true)
+    public double economyRates;
+
+    @CsvBindByName(column = "Wkts", required = true)
+    public int wickets;
+
+    public IPLMostWicketsData()
+    {
+    }
+
+    public IPLMostWicketsData(String player, double averages, double strikeRates, int fourWickets, int fiveWickets,
+                             double economyRates, int wickets)
+    {
+        this.player = player;
+        this.averages = averages;
+        this.strikeRates = strikeRates;
+        this.fourWickets = fourWickets;
+        this.fiveWickets = fiveWickets;
+        this.economyRates = economyRates;
+        this.wickets = wickets;
+    }
 }

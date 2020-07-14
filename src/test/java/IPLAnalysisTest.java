@@ -51,4 +51,19 @@ public class IPLAnalysisTest {
             System.out.println(e.getMessage());
         }
     }
+
+    //UC3
+    @Test
+    public void givenIPLMostRunsCSVData_WhenSortedByMaximum6s_ShouldReturnSortedResultInDecreasingOrder() {
+        try {
+            IPLAnalyser iplAnalyser = new IPLAnalyser(IPLAnalyser.Player.BATSMAN);
+            iplAnalyser.loadIPLData(IPLAnalyser.Player.BATSMAN, IPL_MOST_RUNS_CSV_FILE_PATH);
+            String most6s = iplAnalyser.getSortedOrderByMaximum6sAnd4s();
+            IPLMostRunsData[] iplMostRunsData= new Gson().fromJson(most6s, IPLMostRunsData[].class);
+            Assert.assertEquals("Andre Russell", iplMostRunsData[0].player);
+        } catch (IPLAnalyserException e) {
+            Assert.assertEquals(IPLAnalyserException.ExceptionType.IPL_FILE_PROBLEM, e.type);
+            System.out.println(e.getMessage());
+        }
+    }
 }
